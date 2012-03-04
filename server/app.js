@@ -10,6 +10,8 @@ var express = require('express')
   , currentMovesRegistry = new CurrentMovesRegistry()
   ;
 
+console.log();
+
 app.configure(function(){
   app.set('views', __dirname + '/../views');
   app.use(express.bodyParser());
@@ -27,27 +29,27 @@ io.sockets.on('connection', function (socket) {
   // });
 
   socket.on('controllerConnected', function() {
-    Game.addPlayer(socket.id, new Player());
+    game.addPlayer(socket.id, new Player());
   });
 
   socket.on('controllerDisconnected', function() {
-    Game.removePlayer(socket.id);
+    game.removePlayer(socket.id);
   });
 
   socket.on('move', function(data /* { direction {n,e,s,w} } */) {
-    // Game.movePlayer(socket.id);
+    // game.movePlayer(socket.id);
     currentMovesRegistry.store(socket.id, data);
   });
 
   process.nextTick(function() {
     // This will be the game loop.
     currentMovesRegistry.retrieveAll(function(data) {
-      Object.keys(data).forEach(Game.processMove());
-      var player = Game.getPlayer(socket.id);
+      Object.keys(data).forEach(game.processMove());
+      var player = game.getPlayer(socket.id);
       if (player.isDead) {
         socket.emit('dead');
       } else {
-        socket.emit('update', { player: player, grid: Game.getGameState()});
+        socket.emit('update', { player: player, grid: game.getGameState()});
       }
     });
   });
