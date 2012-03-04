@@ -36,6 +36,7 @@ Game.prototype.processMove = function(direction, sid) {
   var player = this.getPlayer(sid);
   var oldPos = player.positions[0];
   var movedCoord = player.positions[0].move(direction);
+  console.log(movedCoord);
   var status = this.gameState.move(player.positions[0], movedCoord);
   if (status === 0) {
     player.dead = true;
