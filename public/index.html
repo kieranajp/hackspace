@@ -8,6 +8,22 @@
       margin: 0; padding: 0;
       font-family: 'Courier New';
     }
+        
+    .dead {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      z-index: 1337;
+      background-color: rgba(0, 0, 0, 0.3);
+      box-shadow: inset 0px 100px 75px rgba(100, 0, 0, 0.7);
+    }
+    
+    #deathText {
+      font-size: 3em;
+      margin-left: 30%;
+      margin-top: 25%;
+      color: rgb(100, 0, 0);
+    }
     
     #header {
       width: 100%;
@@ -41,25 +57,30 @@
     td {
       width: 100px;
     }
+    
+    #you {
+      color: #0f0;
+      text-shadow: 1px 1px #ccc;;
+    }
   </style>
 </head>
 <body>
-  <div id="header">
-    <h1>Gamepad API</h1>
-    <div id="latency"></div>
-  </div>
-  
-  <br>
-  <canvas id="canvas">
-    You should never see this, else you're a dick with a stupid browser.
-  </canvas>
-  
-  <div id="scoreboard">
-    <h2>Scores</h2>
-    <div id="scores">
+  <div id="death">
+    <div id="header">
+      <h1>Gamepad API</h1>
+      <div id="latency"></div>
+    </div>
+
+    <canvas id="canvas">
+      You should never see this, else you're a dick with a stupid browser.
+    </canvas>
+
+    <div id="scoreboard">
+      <h2>Scores</h2>
+      <div id="scores">
+      </div>
     </div>
   </div>
-  
   <script src="canvas.js"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script>
@@ -87,18 +108,29 @@
       draw(gameState.grid);
       
       timestamp = data.timestamp;
-      timeDiff = +Date.now() - data.timestamp;
-      latency = "Latency: " + timeDiff;
+      latency = "Latency: ";
+      latency += +Date.now() - data.timestamp;
       document.getElementById("latency").innerHTML = latency;
       
       scoreboard = gameState.scoreboard;
       scores = "<table>";
       Object.keys(scoreboard).forEach(function(value, index) {
-        scores += "<tr><td>" + index + "</td><td>" + value + "</td></tr>";
+        scores += "<tr><td>";
+        if (index === player) {
+          scores += "<span id='you'>" + index + "</span>";
+        } else {
+          scores += index;
+        }
+        scores += "</td><td>" + value + "</td></tr>";
       });
       scores += "</table>";
       
       document.getElementById("scores").innerHTML = scores;
+    });
+    
+    socket.on('die', function(data) {
+      document.getElementById("death").innerHTML = "<div id='deathText'>GAME OVER</div>";
+      document.getElementById("death").className += " dead";
     });
   </script>
   <script src="controller.js"></script>
