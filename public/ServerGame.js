@@ -8,7 +8,6 @@ var Game = function() {
 Game.prototype.addPlayer = function(sid, player) {
   var that = this;
   that.players[sid] = player;
-  console.log(player);
   for (var i = 0; i < player.positions.length; i++) {
     that.gameState.addNewCoord(player.positions[i]);
   }
