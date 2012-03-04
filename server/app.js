@@ -9,7 +9,7 @@ var express = require('express')
   , game = new Game()
   , currentMovesRegistry = new CurrentMovesRegistry()
   , updated = false
-  , Scoreboard = require('Scoreboard')
+  , Scoreboard = require('./Scoreboard')
   ;
 
 console.log();
