@@ -14,7 +14,8 @@ io.sockets.on('connection', function (socket) {
 app.listen(8080);
 
 function handler (req, res) {
-  fs.readFile(__dirname + '../public/index.html',
+  console.log(__dirname);
+  fs.readFile(__dirname + '/../public/index.html',
   function (err, data) {
     if (err) {
       res.writeHead(500);
