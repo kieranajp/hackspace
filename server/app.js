@@ -1,7 +1,20 @@
-var app = require('http').createServer(handler)
+var express = require('express')
+  , gzippo = require('gzippo')
+  , app = require('express').createServer()
   , io = require('socket.io').listen(app)
   , fs = require('fs')
   ;
+
+app.configure(function(){
+  app.set('views', __dirname + '/../views');
+  app.use(express.bodyParser());
+  app.use(express.methodOverride());
+  app.use(express.cookieParser());
+  // @Todo Change secret key!
+  // app.use(gzippo.staticGzip(__dirname + '/public'));
+  app.use(gzippo.staticGzip(__dirname + '/../public'));
+  app.use(app.router);
+});
 
 io.sockets.on('connection', function (socket) {
   socket.emit('connection', { success: true });
@@ -13,8 +26,7 @@ io.sockets.on('connection', function (socket) {
 
 app.listen(8080);
 
-function handler (req, res) {
-  console.log(__dirname);
+app.get('/', function (req, res) {
   fs.readFile(__dirname + '/../public/index.html',
   function (err, data) {
     if (err) {
@@ -25,5 +37,5 @@ function handler (req, res) {
     res.writeHead(200);
     res.end(data);
   });
-}
+});
 
