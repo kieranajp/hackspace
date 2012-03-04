@@ -37,7 +37,7 @@ io.sockets.on('connection', function (socket) {
       if (player.isDead) {
         socket.emit('dead');
       } else {
-        socket.emit('update', { player: player, grid: game.getGameState()});
+        socket.emit('update', { player: player, gameState: game.getGameState()});
       }
     }, 400);
   });
