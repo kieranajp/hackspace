@@ -38,7 +38,7 @@ io.sockets.on('connection', function (socket) {
       if (player.isDead) {
         socket.emit('dead');
       } else {
-        socket.emit('update', { gameState: game.getGameState(), timestamp: +Date.now(), scoreboard: Scoreboard.getAll() });
+        socket.emit('update', { gameState: game.getGameState(), timestamp: +Date.now(), scoreboard: scoreboard.getAll() });
       }
     }, 400);
   });
