@@ -9,6 +9,7 @@ var express = require('express')
   , game = new Game()
   , currentMovesRegistry = new CurrentMovesRegistry()
   , updated = false
+  , Scoreboard = require('Scoreboard')
   ;
 
 console.log();
@@ -34,10 +35,11 @@ io.sockets.on('connection', function (socket) {
     process.nextTick(function() {
     setInterval(function() {
       var player = game.getPlayer(socket.id);
+      Scoreboard.addNew(socket.id, player.positions.length);
       if (player.isDead) {
         socket.emit('dead');
       } else {
-        socket.emit('update', { player: player, gameState: game.getGameState()});
+        socket.emit('update', { gameState: game.getGameState(), timestamp: +Date.now(), scoreboard: Scoreboard.getAll() });
       }
     }, 400);
   });
