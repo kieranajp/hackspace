@@ -77,19 +77,22 @@
     });
     
     socket.on('update', function(data) {
+      var latency
+        , scores
+        ;
+      
+      // data.gameState { grid, scoreboard, timestamp }
+      // gameState.scoreboard { playerid: int, playerid: int, playerid: int };
       gameState = JSON.parse(data.gameState);
-      // grid, scoreboard, timestamp
+      draw(gameState.grid);
+      
       timestamp = data.timestamp;
       timeDiff = +Date.now() - data.timestamp;
-      
-      var latency = "Latency: " + timeDiff;
+      latency = "Latency: " + timeDiff;
       document.getElementById("latency").innerHTML = latency;
       
-      draw(gameState.grid);
       scoreboard = gameState.scoreboard;
-      // scoreboard = { playerid: int, playerid: int, playerid: int };
-      
-      var scores = "<table>";
+      scores = "<table>";
       Object.keys(scoreboard).forEach(function(value, index) {
         scores += "<tr><td>" + index + "</td><td>" + value + "</td></tr>";
       });
@@ -97,11 +100,6 @@
       
       document.getElementById("scores").innerHTML = scores;
     });
-    
-    /*socket.on('news', function (data) {
-      console.log(data);
-      socket.emit('my other event', { my: 'data' });
-    });*/
   </script>
   <script src="controller.js"></script>
 </body>
