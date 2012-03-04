@@ -21,10 +21,13 @@ function draw(grid) {
   }
 }
 
-function drawSquare(x, y, color) {
-  var canvas = document.getElementById("canvas");  
-  var ctx = canvas.getContext("2d");  
+var canvas = document.getElementById("canvas");  
+var ctx = canvas.getContext("2d");
 
+function drawSquare(x, y, color) {
   ctx.fillStyle = color;
   ctx.fillRect (x * 50, y * 50, 50, 50);
 }
+
+
+

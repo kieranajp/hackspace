@@ -72,7 +72,7 @@
       <div id="latency"></div>
     </div>
 
-    <canvas id="canvas">
+    <canvas id="canvas" width="400" height="400">
       You should never see this, else you're a dick with a stupid browser.
     </canvas>
 
@@ -115,6 +115,7 @@
       document.getElementById("latency").innerHTML = latency;
       
       scoreboard = gameState.scoreboard;
+      console.log(gameState);
       if (scoreboard != null) {
         scores = "<table>";
         Object.keys(scoreboard).forEach(function(value, index) {
