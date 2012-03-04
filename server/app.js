@@ -10,6 +10,7 @@ var express = require('express')
   , currentMovesRegistry = new CurrentMovesRegistry()
   , updated = false
   , Scoreboard = require('../public/Scoreboard')
+  , scoreboard = new Scoreboard()
   ;
 
 app.configure(function(){
@@ -33,7 +34,7 @@ io.sockets.on('connection', function (socket) {
     process.nextTick(function() {
     setInterval(function() {
       var player = game.getPlayer(socket.id);
-      Scoreboard.addNew(socket.id, player.positions.length);
+      scoreboard.addNew(socket.id, player.positions.length);
       if (player.isDead) {
         socket.emit('dead');
       } else {
