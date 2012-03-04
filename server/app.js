@@ -8,6 +8,7 @@ var express = require('express')
   , CurrentMovesRegistry = require('./currentMovesRegistry').CurrentMovesRegistry
   , game = new Game()
   , currentMovesRegistry = new CurrentMovesRegistry()
+  , updated = false
   ;
 
 console.log();
@@ -30,6 +31,16 @@ io.sockets.on('connection', function (socket) {
 
   socket.on('controllerConnected', function() {
     game.addPlayer(socket.id, new Player());
+    process.nextTick(function() {
+    setInterval(function() {
+      var player = game.getPlayer(socket.id);
+      if (player.isDead) {
+        socket.emit('dead');
+      } else {
+        socket.emit('update', { player: player, grid: game.getGameState()});
+      }
+    }, 400);
+  });
   });
 
   socket.on('controllerDisconnected', function() {
@@ -39,19 +50,6 @@ io.sockets.on('connection', function (socket) {
   socket.on('move', function(data /* { direction {n,e,s,w} } */) {
     // game.movePlayer(socket.id);
     currentMovesRegistry.store(socket.id, data);
-  });
-
-  process.nextTick(function() {
-    // This will be the game loop.
-    currentMovesRegistry.retrieveAll(function(data) {
-      Object.keys(data).forEach(game.processMove());
-      var player = game.getPlayer(socket.id);
-      if (player.isDead) {
-        socket.emit('dead');
-      } else {
-        socket.emit('update', { player: player, grid: game.getGameState()});
-      }
-    });
   });
 });
 
@@ -69,5 +67,17 @@ app.get('/', function (req, res) {
     res.end(data);
   });
 });
+
+process.nextTick(function() {
+  // This will be the game loop.
+  currentMovesRegistry.retrieveAll(function(data) {
+    updated = false;
+    Object.keys(data).forEach(function(player, sid) {
+      game.processMove(player, sid);
+    });
+  });
+});
+
+console.log(io.sockets);
 
 
