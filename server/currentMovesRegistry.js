@@ -1,15 +1,11 @@
 function CurrentMovesRegistry() {
-  this.registry = [];
+  this.registry = {};
 }
 
-CurrentMovesRegistry.prototype.store = function(first_argument) {
-  // body...
+CurrentMovesRegistry.prototype.store = function(socket, data) {
+  this.registry[socket.id] = data;
 };
 
-CurrentMovesRegistry.prototype.retrieve = function(first_argument) {
-  // body...
-};
-
-CurrentMovesRegistry.prototype.method_name = function(first_argument) {
-  // body...
+CurrentMovesRegistry.prototype.retrieve = function(socket) {
+  return this.registry[socket.id];
 };
