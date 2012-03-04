@@ -12,8 +12,6 @@ var express = require('express')
   , Scoreboard = require('../public/Scoreboard')
   ;
 
-console.log();
-
 app.configure(function(){
   app.set('views', __dirname + '/../views');
   app.use(express.bodyParser());
@@ -79,7 +77,3 @@ process.nextTick(function() {
     });
   });
 });
-
-console.log(io.sockets);
-
-
