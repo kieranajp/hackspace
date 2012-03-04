@@ -9,9 +9,9 @@ Game.prototype.addPlayer = function(sid, player) {
   var that = this;
   that.players[sid] = player;
   console.log(player);
-  Object.keys(player.positions).forEach(function(value, index, array) {
-    that.gameState.addNewCoord(value);
-  });
+  for (var i = 0; i < player.positions.length; i++) {
+    that.gameState.addNewCoord(player.positions[i]);
+  }
 };
 
 Game.prototype.getPlayer = function(sid) {
@@ -24,9 +24,10 @@ Game.prototype.getGameState = function(sid) {
 
 Game.prototype.removePlayer = function(sid) {
   var that = this;
-  Object.keys(this.getPlayer(sid).positions).forEach(function(value, index, array) {
-    that.gameState.removeCoord(value);
-  });
+  var player = this.getPlayer(sid);
+  for (var i = 0; i < player.positions.length; i++) {
+    that.gameState.addNewCoord(player.positions[i]);
+  }
   delete that.players[sid];
 };
 
