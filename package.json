@@ -12,6 +12,8 @@
   "devDependencies": {},
   "optionalDependencies": {
 			"socket.io": "*"
+		, "express": "*"
+    , "gzippo": "*"
 		},
   "engines": {
     "node": "*"
