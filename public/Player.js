@@ -5,15 +5,20 @@ var util = require('util')
 var Player = function() {
   this.connection = null;
   this.timeout = 10 * 60 * 60 * 1000;
-  this.position = [];
+  this.positions = [];
+  this.direction = 'n';
 };
 
 util.inherits(Player, EventEmitter);
 
-Player.prototype.updatePosition = function(first_argument) {
-  // body...
+// Player.prototype.updatePosition = function(first_argument) {
+//   // body...
+// };
+
+Player.prototype.changeDirection = function(direction) {
+  this.direction = direction;
 };
 
-Player.prototype.changeDirection = function(first_argument) {
-  // body...
+Player.prototype.eat = function(first_argument) {
+  // find a way to add a tail onto it.
 };
