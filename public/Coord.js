@@ -29,3 +29,5 @@ Coord.prototype.move = function(direction) {
   }
   return newCoord;
 };
+
+module.exports = Coord;
