@@ -6,9 +6,10 @@ var Game = function() {
 };
 
 Game.prototype.addPlayer = function(sid, player) {
-  this.players[sid] = player;
+  var that = this;
+  that.players[sid] = player;
   Object.keys(player.positions).forEach(function(value, index, array) {
-    this.gameState.addNewCoord(value);
+    that.gameState.addNewCoord(value);
   });
 };
 
@@ -21,10 +22,11 @@ Game.prototype.getGameState = function(sid) {
 };
 
 Game.prototype.removePlayer = function(sid) {
+  var that = this;
   Object.keys(this.getPlayer(sid).positions).forEach(function(value, index, array) {
-    this.gameState.removeCoord(value);
+    that.gameState.removeCoord(value);
   });
-  delete this.players[sid];
+  delete that.players[sid];
 };
 
 // process the moves on the next tick of the sever.
