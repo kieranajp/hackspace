@@ -49,5 +49,11 @@ app.get('/', function (req, res) {
   });
 });
 
+var game = new Game();
+
+process.nextTick(function() {
+  // This will be the game loop.
+});
+
 
 
