@@ -23,6 +23,7 @@ Game.prototype.removePlayer = function(sid) {
 
 // process the moves on the next tick of the sever.
 Game.prototype.processMove = function(player, sid) {
+  console.log(player);
   var oldPos = player.positions[0];
   var movedCoord = player.positions[0].move(player.direction);
   var status = this.gameState.move(player.positions[0], movedCoord);
