@@ -7,6 +7,9 @@ var Game = function() {
 
 Game.prototype.addPlayer = function(sid, player) {
   this.players[sid] = player;
+  Object.keys(player.positions).forEach(function(value, index, array) {
+    this.gameState.addNewCoord(value);
+  });
 };
 
 Game.prototype.getPlayer = function(sid) {
