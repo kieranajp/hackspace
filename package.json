@@ -10,7 +10,9 @@
   "main": "./server/app.js",
   "dependencies": {},
   "devDependencies": {},
-  "optionalDependencies": {},
+  "optionalDependencies": {
+			"socket.io": "*"
+		},
   "engines": {
     "node": "*"
   }
