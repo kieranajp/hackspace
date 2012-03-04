@@ -24,6 +24,10 @@ GameState.prototype.addNewCoord = function(Coord) {
   this.grid[Coord.y][Coord.x] = 0;
 };
 
+GameState.prototype.removeCoord = function(Coord) {
+  this.grid[Coord.y][Coord.x] = undefined;
+};
+
 GameState.prototype.checkCoord = function(Coord) {
   // body...
   // switch() {
