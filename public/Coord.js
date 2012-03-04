@@ -3,6 +3,14 @@ function Coord(x, y){
 	this.y = y;
 }
 
+Coord.x = function() {
+  return this.x;
+};
+
+Coord.y = function() {
+  return this.y;
+};
+
 Coord.prototype.toString = function() {
 	return this.x + "," + this.y;
 };
