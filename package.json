@@ -1,0 +1,22 @@
+{
+  "author": "Tom Gallacher, Kieran Patel, Chris Garbe",
+  "name": "fuckPikachu",
+  "description": "Poon wars revisited",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/kieranajp/hackspace.git"
+  },
+  "main": "./server/app.js",
+  "dependencies": {},
+  "devDependencies": {},
+  "optionalDependencies": {
+			"socket.io": "*"
+		, "express": "*"
+    , "gzippo": "*"
+    , "mime": "*"
+		},
+  "engines": {
+    "node": "*"
+  }
+}
