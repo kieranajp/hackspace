@@ -21,10 +21,12 @@ GameState.prototype.updateCoordToGrid = function(fromCoord, toCoord) {
 };
 
 GameState.prototype.addNewCoord = function(Coord) {
+  console.log(Coord);
   this.grid[Coord.y][Coord.x] = 0;
 };
 
 GameState.prototype.removeCoord = function(Coord) {
+  console.log(Coord);
   this.grid[Coord.y][Coord.x] = undefined;
 };
 
