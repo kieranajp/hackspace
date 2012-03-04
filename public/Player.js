@@ -24,3 +24,5 @@ Player.prototype.changeDirection = function(direction) {
 Player.prototype.eat = function(first_argument) {
   // find a way to add a tail onto it.
 };
+
+module.exports = Player;
