@@ -12,6 +12,7 @@
   "devDependencies": {},
   "optionalDependencies": {
 			"socket.io": "*"
+		, "express": "*"
 		},
   "engines": {
     "node": "*"
