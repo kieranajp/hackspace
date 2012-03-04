@@ -21,6 +21,9 @@ Game.prototype.getGameState = function(sid) {
 };
 
 Game.prototype.removePlayer = function(sid) {
+  Object.keys(this.getPlayer(sid).positions).forEach(function(value, index, array) {
+    this.gameState.removeCoord(value);
+  });
   delete this.players[sid];
 };
 
