@@ -1,12 +1,13 @@
 var util = require('util')
   , EventEmitter = require('events').EventEmitter
+  , Coord = require('./Coord')
   ;
 
 var Player = function() {
   this.connection = null;
   this.timeout = 10 * 60 * 60 * 1000;
-  this.positions = [];
-  this.direction = 'n';
+  this.positions = [new Coord(4,4)];
+  this.direction = '';
   this.dead = false;
 };
 
