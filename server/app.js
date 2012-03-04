@@ -14,8 +14,8 @@ app.configure(function(){
   app.use(app.router);
 });
 
-io.sockets.on('connection', function (socket) {
-  socket.emit('connection', { success: true });
+io.sockets.on('controllerConnected', function (socket) {
+  socket.emit('connected', { success: true, player: true });
   socket.on('control', function (data) {
 		// This will have the controls coming into the node instance, we will need
 		// to sort these by id's and ensure that they are not mutable by each other.
