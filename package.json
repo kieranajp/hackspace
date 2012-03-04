@@ -15,6 +15,7 @@
 		, "express": "*"
     , "gzippo": "*"
     , "mime": "*"
+    , "serialport": "*"
 		},
   "engines": {
     "node": "*"

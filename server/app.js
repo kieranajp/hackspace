@@ -50,7 +50,7 @@ io.sockets.on('connection', function (socket) {
 
   socket.on('move', function(data /* { direction {n,e,s,w} } */) {
     // game.movePlayer(socket.id);
-    currentMovesRegistry.store(socket.id, data);
+    currentMovesRegistry.store(socket.id, data.direction);
   });
 });
 
@@ -73,8 +73,8 @@ process.nextTick(function() {
   // This will be the game loop.
   currentMovesRegistry.retrieveAll(function(data) {
     updated = false;
-    Object.keys(data).forEach(function(player, sid) {
-      game.processMove(player, sid);
+    Object.keys(data).forEach(function(direction, sid) {
+      game.processMove(direction, sid);
     });
   });
 });
