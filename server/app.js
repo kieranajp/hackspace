@@ -10,8 +10,6 @@ app.configure(function(){
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(express.cookieParser());
-  // @Todo Change secret key!
-  // app.use(gzippo.staticGzip(__dirname + '/public'));
   app.use(gzippo.staticGzip(__dirname + '/../public'));
   app.use(app.router);
 });
@@ -21,6 +19,18 @@ io.sockets.on('connection', function (socket) {
   socket.on('control', function (data) {
 		// This will have the controls coming into the node instance, we will need
 		// to sort these by id's and ensure that they are not mutable by each other.
+  });
+
+  socket.on('controllerConnected', function() {
+
+  });
+
+  socket.on('controllerDisconnected', function() {
+
+  });
+
+  socket.on('move', function(data /* { direction {n,e,s,w} } */) {
+    
   });
 });
 
@@ -38,4 +48,6 @@ app.get('/', function (req, res) {
     res.end(data);
   });
 });
+
+
 
