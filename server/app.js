@@ -20,7 +20,7 @@ app.configure(function(){
 });
 
 io.sockets.on('connection', function (socket) {
-  socket.emit('connected', { success: true, player: true });
+  socket.emit('connected', { success: true, player: socket.id });
   // socket.on('control', function (data) {
 		// // This will have the controls coming into the node instance, we will need
 		// // to sort these by id's and ensure that they are not mutable by each other.
@@ -38,6 +38,19 @@ io.sockets.on('connection', function (socket) {
     // Game.movePlayer(socket.id);
     currentMovesRegistry.store(socket.id, data);
   });
+
+  process.nextTick(function() {
+    // This will be the game loop.
+    currentMovesRegistry.retrieveAll(function(data) {
+      Object.keys(data).forEach(Game.processMove());
+      var player = Game.getPlayer(socket.id);
+      if (player.isDead) {
+        socket.emit('dead');
+      } else {
+        socket.emit('update', { player: player, grid: Game.getGameState()});
+      }
+    });
+  });
 });
 
 app.listen(8080);
@@ -54,13 +67,5 @@ app.get('/', function (req, res) {
     res.end(data);
   });
 });
-
-process.nextTick(function() {
-  // This will be the game loop.
-  currentMovesRegistry.retrieveAll(function(data) {
-    Object.keys(data).forEach(Game.processMove());
-  });
-});
-
 
 

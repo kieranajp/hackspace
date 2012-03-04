@@ -7,6 +7,7 @@ var Player = function() {
   this.timeout = 10 * 60 * 60 * 1000;
   this.positions = [];
   this.direction = 'n';
+  this.dead = false;
 };
 
 util.inherits(Player, EventEmitter);
