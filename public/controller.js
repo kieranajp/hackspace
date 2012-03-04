@@ -1,5 +1,6 @@
-var controller;
-var controllerTimer;
+var controller 
+  , controllerTimer
+  ;
 
 function onGamepadConnected(e) {
   controller = e.gamepad;
@@ -119,21 +120,27 @@ window.addEventListener("MozGamepadDisconnected", onGamepadDisconnected);
 function createEvent(type) {
   switch (type) {
     case "connected":
+      socket.emit('controllerConnected');
       console.log("Gamepad connected: ", controller.id);
       break;
     case "disconnected":
+      socket.emit('controllerDisconnected');
       console.log("Gamepad disconnected: ", controller.id);
       break;
     case "left-up":
+      socket.emit('move', { direction: 'n' });
       console.log("Left stick north");
       break;
     case "left-down":
+      socket.emit('move', { direction: 's' });
       console.log("Left stick south");
       break;
     case "left-right":
+      socket.emit('move', { direction: 'e' });
       console.log("Left stick east");
       break;
     case "left-left":
+      socket.emit('move', { direction: 'w' });
       console.log("Left stick west");
       break;
     case "right-up":
