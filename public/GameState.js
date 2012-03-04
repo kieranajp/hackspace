@@ -20,6 +20,10 @@ GameState.prototype.updateCoordToGrid = function(fromCoord, toCoord) {
   this.grid[fromCoord.y][fromCoord.x] = undefined;
 };
 
+GameState.prototype.addNewCoord = function(Coord) {
+  this.grid[Coord.y][Coord.x] = 0;
+};
+
 GameState.prototype.checkCoord = function(Coord) {
   // body...
   // switch() {
