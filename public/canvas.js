@@ -1,4 +1,9 @@
 function draw(grid) {
+  var x
+    , y
+    ;
+
+
   for (x = 0; x < grid.length; ++x) {
     for (y = 0; y < grid[x].length; ++y) {
       switch (grid[x][y]) {
