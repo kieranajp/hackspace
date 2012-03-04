@@ -3,6 +3,11 @@ var express = require('express')
   , app = require('express').createServer()
   , io = require('socket.io').listen(app)
   , fs = require('fs')
+  , Game = require('../public/ServerGame')
+  , Player = require('../public/Player')
+  , CurrentMovesRegistry = require('./currentMovesRegistry').CurrentMovesRegistry
+  , game = new Game()
+  , currentMovesRegistry = new CurrentMovesRegistry()
   ;
 
 app.configure(function(){
@@ -10,17 +15,41 @@ app.configure(function(){
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(express.cookieParser());
-  // @Todo Change secret key!
-  // app.use(gzippo.staticGzip(__dirname + '/public'));
   app.use(gzippo.staticGzip(__dirname + '/../public'));
   app.use(app.router);
 });
 
-io.sockets.on('controllerConnected', function (socket) {
-  socket.emit('connected', { success: true, player: true });
-  socket.on('control', function (data) {
-		// This will have the controls coming into the node instance, we will need
-		// to sort these by id's and ensure that they are not mutable by each other.
+io.sockets.on('connection', function (socket) {
+  socket.emit('connected', { success: true, player: socket.id });
+  // socket.on('control', function (data) {
+		// // This will have the controls coming into the node instance, we will need
+		// // to sort these by id's and ensure that they are not mutable by each other.
+  // });
+
+  socket.on('controllerConnected', function() {
+    Game.addPlayer(socket.id, new Player());
+  });
+
+  socket.on('controllerDisconnected', function() {
+    Game.removePlayer(socket.id);
+  });
+
+  socket.on('move', function(data /* { direction {n,e,s,w} } */) {
+    // Game.movePlayer(socket.id);
+    currentMovesRegistry.store(socket.id, data);
+  });
+
+  process.nextTick(function() {
+    // This will be the game loop.
+    currentMovesRegistry.retrieveAll(function(data) {
+      Object.keys(data).forEach(Game.processMove());
+      var player = Game.getPlayer(socket.id);
+      if (player.isDead) {
+        socket.emit('dead');
+      } else {
+        socket.emit('update', { player: player, grid: Game.getGameState()});
+      }
+    });
   });
 });
 
@@ -38,4 +67,5 @@ app.get('/', function (req, res) {
     res.end(data);
   });
 });
+
 

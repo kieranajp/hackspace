@@ -1,15 +1,17 @@
 function CurrentMovesRegistry() {
-  this.registry = [];
+  this.registry = {};
 }
 
-CurrentMovesRegistry.prototype.store = function(first_argument) {
-  // body...
+CurrentMovesRegistry.prototype.store = function(sid, data) {
+  this.registry[sid] = data;
 };
 
-CurrentMovesRegistry.prototype.retrieve = function(first_argument) {
-  // body...
+CurrentMovesRegistry.prototype.retrieve = function(sid, cb) {
+  cb(this.registry[sid]);
 };
 
-CurrentMovesRegistry.prototype.method_name = function(first_argument) {
-  // body...
+CurrentMovesRegistry.prototype.retrieveAll = function(cb) {
+  cb(this.registry);
 };
+
+exports.CurrentMovesRegistry = CurrentMovesRegistry;
