@@ -12,6 +12,8 @@ var express = require('express')
   , Scoreboard = require('../public/Scoreboard')
   , scoreboard = new Scoreboard()
   ;
+  
+io.set("log level", 0);
 
 app.configure(function(){
   app.set('views', __dirname + '/../views');
@@ -71,10 +73,18 @@ app.get('/', function (req, res) {
 
 process.nextTick(function() {
   // This will be the game loop.
-  currentMovesRegistry.retrieveAll(function(data) {
-    updated = false;
-    Object.keys(data).forEach(function(direction, sid) {
-      game.processMove(direction, sid);
+  setInterval(function() {
+    currentMovesRegistry.retrieveAll(function(data) { 
+      updated = false;
+      
+      /*Object.keys(data).forEach(function(value, index, array) {
+        console.log(value + "    " + index + "       " + data[value]);
+        game.processMove(value, index);
+      });*/
+      
+      Object.keys(data).forEach(function(direction, index, array) {
+        game.processMove(data[direction], direction);
+      });
     });
-  });
+  }, 200);
 });

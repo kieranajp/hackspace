@@ -3,12 +3,12 @@ function Coord(x, y){
 	this.y = y;
 }
 
-Coord.x = function() {
-  return this.x;
+Coord.setX = function(x) {
+  this.x = x;
 };
 
-Coord.y = function() {
-  return this.y;
+Coord.setY = function(y) {
+  this.y = y;
 };
 
 Coord.prototype.toString = function() {
@@ -20,19 +20,23 @@ Coord.prototype.isEqualTo = function(coord) {
 };
 
 Coord.prototype.move = function(direction) {
-  var newCoord = this;
+  var newCoord;
   switch(direction) {
     case 'n':
-      --newCoord.y;
+      newCoord = new Coord(this.x, this.y - 1);
+      console.log(newCoord);
       break;
     case 'e':
-      ++newCoord.x;
+      newCoord = new Coord(this.x + 1, this.y);
+      console.log(newCoord);
       break;
     case 's':
-      ++newCoord.y;
+      newCoord = new Coord(this.x, this.y + 1);
+      console.log(newCoord);
       break;
     case 'w':
-      --newCoord.x;
+      newCoord = new Coord(this.x - 1, this.y);
+      console.log(newCoord);
       break;
   }
   return newCoord;

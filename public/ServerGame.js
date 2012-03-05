@@ -33,27 +33,30 @@ Game.prototype.removePlayer = function(sid) {
 // process the moves on the next tick of the sever.
 Game.prototype.processMove = function(direction, sid) {
   var player = this.getPlayer(sid);
-  var oldPos = player.positions[0];
-  var movedCoord = player.positions[0].move(direction);
-  console.log(movedCoord);
-  var status = this.gameState.move(player.positions[0], movedCoord);
-  if (status === 0) {
-    player.dead = true;
-    return false;
-  } else {
-    player.positions[0] = movedCoord;
-  }
+  console.log(player + "     " + sid);
+  if (player !== undefined) {
+    var oldPos = player.positions[0];
+    var movedCoord = player.positions[0].move(direction);
+    var status = this.gameState.move(player.positions[0], movedCoord);
+    if (status === 0) {
+      player.dead = true;
+      return false;
+    } else {
+      player.positions[0] = movedCoord;
+    }
 
-  for (var i = 1; i < player.positions.length; i++) {
-    this.gameState.move(player.positions[i], oldPos);
-    player.positions[i] = oldPos;
-    oldPos = player.positions[i];
-  }
+    for (var i = 1; i < player.positions.length; i++) {
+      this.gameState.move(player.positions[i], oldPos);
+      player.positions[i] = oldPos;
+      oldPos = player.positions[i];
+    }
 
-  if (status === 1) {
-    player.positions.push(oldPos);
+    if (status === 1) {
+      player.positions.push(oldPos);
+    }
+    return true;
   }
-  return true;
+  return false;
 };
 
 module.exports = Game;

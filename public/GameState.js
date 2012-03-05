@@ -41,6 +41,9 @@ GameState.prototype.checkCoord = function(Coord) {
   //     // food
   //     break;
   // }
+  if (Coord === undefined) {
+    return undefined;
+  }
   if (this.inBounds(Coord)) {
     return this.coordToGrid(Coord);
   }
@@ -48,8 +51,8 @@ GameState.prototype.checkCoord = function(Coord) {
   return 0;
 };
 
-GameState.prototype.inBounds = function(Coord) {
-  if (Coord.x < 0 || Coord.x > this.grid[0].length || Coord.y < 0 || Coord.y > this.grid.length) {
+GameState.prototype.inBounds = function(coord) {
+  if (coord.x < 0 || coord.x > this.grid[0].length || coord.y < 0 || coord.y > this.grid.length) {
     return false;
   }
   return true;
@@ -58,7 +61,7 @@ GameState.prototype.inBounds = function(Coord) {
 GameState.prototype.move = function(fromCoord, toCoord) {
   // body...s
   // check toCoordForObstructions.
-
+  console.log(fromCoord + "    " + toCoord);
   var coordStatus = this.checkCoord(toCoord);
 
 
